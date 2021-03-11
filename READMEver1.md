@@ -1,6 +1,7 @@
 # Clustering - Top 5 Countries in need of Medical Aid
 
-**Problem Statement** - To identify top 5 countries most in need of aid from
+### Problem Statement:<br/>
+To identify top 5 countries most in need of aid from
 a given list of about 200 countries, along with their data like income, GDP, health
 expenditure per person, child mortality, etc.
 
@@ -20,16 +21,16 @@ gdpp | The GDP per capita. Calculated as the Total GDP divided by the total popu
 
 
 
-**Analysis Methodology**
+### Analysis Methodology
 
-*Data Cleaning*
+**Data Cleaning**
 1. There were no missing values in the dataset, so did not perform any missing value analysis or imputation.
 2. All the variables were in the correct datatypes, so no datatype conversion required.
 3. Converted columns exports, health and imports to values, using the gdp.
 4. Dropped the percentage value columns of exports, health and imports.
 
-*Bivariate Analysis*
 
+**Bivariate Analysis**
 
 ![Alt text](images/chilMort_health_income.png?raw=true "Title")
 
@@ -57,27 +58,56 @@ Countries with least life expectancy, even the child mortality rates are very hi
 
 ![Alt text](images/totalFer_childMort_health.png?raw=true "Title")
 
-Countries with high per person incomes mostly have fertility rate as 1 or 2, in some cases 3 as well. These also have the lowest child mortality rates. As the per person income decreses, the fertility rate increases and so does the child mortality.
-
+Countries with high per person incomes mostly have fertility rate as 1 or 2, in some cases 3 as well. These also have the lowest child mortality rates. As the per person income decreses, the fertility rate increases and so does the child mortality.\
 We also see that the health expenditure and income are generally decreasing as the fertility rate increases after 3.
 
 **Outlier Removal**
 
 Outliers were seen in the upper range of variables income, inflation, gdpp, exports, health and imports. Only life_expec showed outliers in the lower range. Please refer to the python notebook for the plots and detailed explanation.
 
-We can't drop outliers, since data is less. Also, since the countries falling on lower range of income, gdpp, health, exports imports etc are those of countries in mose dire need of aid, hence we will not remove countries in the lower range on these variables.
-
+We can't drop outliers, since data is less. Also, since the countries falling on lower range of income, gdpp, health, exports imports etc are those of countries in mose dire need of aid, hence we will not remove countries in the lower range on these variables.\
 Low child mortality is a sign of developed country, and vice versa. Thus, even here, we will not treat the outliers on the higher ranges, we will treat outliers only in the lower range.
 
 
 **Scaling**
 
-All the variables were scaled using a standard scaler. In standard scaling, the mean of the scaled values will be 0 and the standard deviation will be 1. This means that all values will fall between -1 to +1.
+All the variables were scaled using a standard scaler. In standard scaling, the mean of the scaled values will be 0 and the standard deviation will be 1. This means that all values will fall between -1 to +1.\
 Standard scaling is done so that in case of variables having high discrepancy between value ranges, for eg., in our case, total_fert has values between 1-8. Income or gdpp on the other hand can have values in lakhs. This huge discrepancy in value ranges in different variables makes the model slow and inefficient.
 
-**Clustering (K-Means Clustering)**
+### Clustering (K-Means Clustering)
+
+**Hopkins Score**
 
 The first thing to check is whether our data is suitable for clustering or not. Hopkins Score is a method to assess the clustering tendency. Hopkins Score uses the below formula to calculate clustering tendency:
 
-![Alt text](images/Hopkins_Score_formula.jpg?raw=true "Title")
+![Alt text](images/Hopkins_Score_formula.png?raw=true "Title")
+
+After sampling a random set of points from the data, the Hopkins Score algorithm will measure the distances between closest points- indicated in the above formula by xi. After this, the algorithm will compute distances between our sampled data and a random distribution, indicated as yi. Both these xi and yi are averaged, and these values are inserted in the formula to get Hopkins Score.\
+Now, if our data is uniformly distributed (i.e., does not have clustering tendency), the two denominator terms will be close to each other, resulting in a Hopkins Score of approx 0.5. However, if the data is clustered, the distances yi will be much larger than xi, resulting in a high value of the Hopkins Score. Thus, if our Hopkins Score is higher than 0.75, it indicates very good clustering tendency. Our data has a Hopkins Score os 0.95, indicating very good clustering tendency.
+
+
+**Choosing a value for number of clusters**
+
+Since we are using K-Means clustering, we need to input the number of clusters to the algorithm. This is one of the major drawbacks of K-Means Clustering. For choosing a value of K, we can use two methods- Silhouette Method or Elbow Curve.\
+1. ***Silhouette Score***\
+Silhouette Score is a metric used to calculate the goodness of a clustering technique. Its value ranges from -1 to +1.\
+  >1: Means clusters are well apart from each other and clearly distinguished.\
+  >0: Means clusters are indifferent, or we can say that the distance between clusters is not significant.\
+  >-1: Means clusters are assigned in the wrong way.\
+
+Silhouette Score = (b-a)/max(a,b)\
+where,\
+a= average intra-cluster distance i.e the average distance between each point within a cluster.\
+b= average inter-cluster distance i.e the average distance between all clusters.
+
+Our data has given the below Silhouette Score plot, suggesting 3 as the ideal value for number of clusters for our data.
+
+![Alt text](images/Silhouette_Score_Plot.png?raw=true "Title")
+
+3.***Elbow Curve***\
+The elbow curve runs K-Means clustering on the dataset for a range of values of K specified(2-10 in our case). Then it calculates the Sum of Squared Errors for each value of K.
+In the plot, the point where we see a kind of 'elbow' being created is the number of clusters being suggested by the elbow curve. From the below plot for our data, we can see that even Elbow Curve is suggesting a value of 3 for K.
+
+![Alt text](images/Elbow_Curve_Plot.png?raw=true "Title")
+
 
