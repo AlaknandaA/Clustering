@@ -146,9 +146,9 @@ The 5 countries most in need of aid according to K-mean clustering are:
 5. Chad
 
 
-# Thus, the top 5 countries in need of aid according to both K-Means Clustering and Hierarchical Clustering are-
-1. Haiti
-2. Burundi
-3. Seirra Leone
-4. Liberia
-5. Chad
+### Thus, the top 5 countries in need of aid according to both K-Means Clustering and Hierarchical Clustering are-
+### 1. Haiti
+### 2. Burundi
+### 3. Seirra Leone
+### 4. Liberia
+### 5. Chad
