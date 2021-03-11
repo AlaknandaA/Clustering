@@ -38,7 +38,7 @@ We can clearly see high correlation between the income and health variables. Cou
 This is because countries with higher incomes have better infrastructure, and also people’s flexibility is also increased by additional money.
 
 
-![Alt text](images/chilMort_health_income.png?raw=true "Title")
+![Alt text](images/Life_epec-health-income.png?raw=true "Title")
 
 
 There is a high correlation between health and life expectancy. Countries with high health spending have higher life expectancy, but it reaches a pleatue somewhere about 10000$. Spending more than this amount also results in the same life expectancy. Also, we see that where the spending on health and life expectancy are higher, even the per person income is higher. For countries with low per person income, the life expectancy and health spending are low.
@@ -52,3 +52,32 @@ Country	| Child_mort |	Life_expec |	Health |	Income
 31 |	Central African Republic |	149.0 |	47.5 |	17.7508 |	888
 166 |	Zambia |	83.1 |	52.0 |	85.9940 |	3280
 94 |	Malawi	| 90.5 |	53.1 |	30.2481 |	1030
+
+Countries with least life expectancy, even the child mortality rates are very high, which is probably why the life expectancy rates of these countries are low. In the countries with max health spending and max life expectancy, the child mortality rates are also very low.
+
+![Alt text](images/totalFer_childMort_health.png?raw=true "Title")
+
+Countries with high per person incomes mostly have fertility rate as 1 or 2, in some cases 3 as well. These also have the lowest child mortality rates. As the per person income decreses, the fertility rate increases and so does the child mortality.
+
+We also see that the health expenditure and income are generally decreasing as the fertility rate increases after 3.
+
+**Outlier Removal**
+
+Outliers were seen in the upper range of variables income, inflation, gdpp, exports, health and imports. Only life_expec showed outliers in the lower range. Please refer to the python notebook for the plots and detailed explanation.
+
+We can't drop outliers, since data is less. Also, since the countries falling on lower range of income, gdpp, health, exports imports etc are those of countries in mose dire need of aid, hence we will not remove countries in the lower range on these variables.
+
+Low child mortality is a sign of developed country, and vice versa. Thus, even here, we will not treat the outliers on the higher ranges, we will treat outliers only in the lower range.
+
+
+**Scaling**
+
+All the variables were scaled using a standard scaler. In standard scaling, the mean of the scaled values will be 0 and the standard deviation will be 1. This means that all values will fall between -1 to +1.
+Standard scaling is done so that in case of variables having high discrepancy between value ranges, for eg., in our case, total_fert has values between 1-8. Income or gdpp on the other hand can have values in lakhs. This huge discrepancy in value ranges in different variables makes the model slow and inefficient.
+
+**Clustering (K-Means Clustering)**
+
+The first thing to check is whether our data is suitable for clustering or not. Hopkins Score is a method to assess the clustering tendency. Hopkins Score uses the below formula to calculate clustering tendency:
+
+![Alt text](images/Hopkins_Score_formula.jpg?raw=true "Title")
+
