@@ -104,10 +104,51 @@ Our data has given the below Silhouette Score plot, suggesting 3 as the ideal va
 
 ![Alt text](images/Silhouette_Score_Plot.png?raw=true "Title")
 
-3.***Elbow Curve***\
+2. ***Elbow Curve***\
 The elbow curve runs K-Means clustering on the dataset for a range of values of K specified(2-10 in our case). Then it calculates the Sum of Squared Errors for each value of K.
 In the plot, the point where we see a kind of 'elbow' being created is the number of clusters being suggested by the elbow curve. From the below plot for our data, we can see that even Elbow Curve is suggesting a value of 3 for K.
 
 ![Alt text](images/Elbow_Curve_Plot.png?raw=true "Title")
 
+**Clustering**
+Finally, we create clusters on our data with value of K as 3.
 
+![Alt text](images/KMean1.png?raw=true "Title")
+
+![Alt text](images/KMean2.png?raw=true "Title")
+
+The 5 countries most in need of aid according to K-mean clustering are:
+
+1. Haiti
+2. Burundi
+3. Seirra Leone
+4. Liberia
+5. Chad
+
+
+### Clustering (Hierarchical Clustering)
+
+In Hierarchical Clustering we do not need to predecide the number of clusters. The main drawback of hierarchical clustering is, since it calculates the distance from each data point to every other data point, it is much more time-intensive than K-Means. It is thus not the preferred method to use for huge datasets.\
+The plot got by Hierarchical Clustering(complete linkage) is:
+
+![Alt text](images/Hierarchical2.png?raw=true "Title")
+
+By cutting the plot at K=3, we get the following data cluster profile:
+
+![Alt text](images/Hierarchical1.png?raw=true "Title")
+
+The 5 countries most in need of aid according to K-mean clustering are:
+
+1. Haiti
+2. Burundi
+3. Seirra Leone
+4. Liberia
+5. Chad
+
+
+# Thus, the top 5 countries in need of aid according to both K-Means Clustering and Hierarchical Clustering are-
+1. Haiti
+2. Burundi
+3. Seirra Leone
+4. Liberia
+5. Chad
